@@ -1,3 +1,4 @@
+import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
 import 'package:encrypted_chat_app/screen/chatscreen.dart';
 import 'package:flutter/material.dart';
 

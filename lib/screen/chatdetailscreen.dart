@@ -1,134 +1,112 @@
+import 'package:encrypted_chat_app/screen/chatscreen.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
-
-  @override
-  State<ChatScreen> createState() => _ChatDetailScreenState();
-}
-
-class _ChatDetailScreenState extends State<ChatScreen> {
-  final TextEditingController _messageController = TextEditingController();
-  final List<ChatMessage> _messages = [];
+class ChatDetailScreen extends StatelessWidget {
+  const ChatDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage('https://images.pexels.com/photos/15948932/pexels-photo-15948932/free-photo-of-cat-under-stroller.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
-            ),
-            SizedBox(width: 8),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Thinkcode'),
-                Text(
-                  'Online',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ],
-            ),
-          ],
-        ),
+        title: Text('ChatsDetail'),
+        elevation: 0,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.edit_outlined),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Column(
         children: [
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                return _messages[index];
-              },
+          Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: const Icon(Icons.search),
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide.none,
+                ),
+              ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.blueGrey,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: InputDecoration(
-                      hintText: 'Type a message...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24),
+          Expanded(
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChatScreen(),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
+                    );
+                  },
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      backgroundColor: Colors.grey,
+                      child: Icon(
+                        Icons.person,
+                        color: Colors.white,
+                      ),
+                    ),
+                    title: Text(
+                      'Thinkcode $index',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text(
+                      'Last message...',
+                      style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white,
+                      ),
+                    ),
+                    trailing: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          '12:30 PM',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 4),
+                        Container(
+                          padding: EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: Colors.blueGrey,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text(
+                            '5',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ),
-                SizedBox(width: 8),
-                IconButton(
-                  onPressed: _sendMessage,
-                  icon: Icon(Icons.send),
-                  color: Colors.white,
-                ),
-              ],
+                );
+              },
             ),
           ),
         ],
       ),
-    );
-  }
-
-  void _sendMessage() {
-    if (_messageController.text.trim().isEmpty) return;
-
-    setState(() {
-      _messages.add(
-        ChatMessage(
-          message: _messageController.text,
-          isMe: true,
-        ),
-      );
-    });
-    _messageController.clear();
-  }
-}
-
-class ChatMessage extends StatelessWidget {
-  final String message;
-  final bool isMe;
-
-  const ChatMessage({
-    required this.message,
-    required this.isMe,
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4),
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: isMe
-              ? Colors.white
-              : Colors.grey,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isMe ? Colors.white : Colors.black,
-          ),
-        ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.message),
       ),
     );
   }
