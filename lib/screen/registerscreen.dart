@@ -8,6 +8,7 @@ class RegisterScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -61,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
                  onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ChatScreen()),
+                    MaterialPageRoute(builder: (context) => ChatDetailScreen()),
                   );
                 },
                 child: Text('Register'),

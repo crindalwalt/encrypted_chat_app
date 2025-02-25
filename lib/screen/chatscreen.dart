@@ -1,14 +1,15 @@
+
 import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
-  const ChatScreen({Key? key}) : super(key: key);
+class ChatDetailScreen extends StatelessWidget {
+  const ChatDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chats'),
+        title:  Text('ChatsDetail'),
         elevation: 0,
         actions: [
           IconButton(
@@ -42,7 +43,7 @@ class ChatScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => ChatDetailScreen(),
+                        builder: (context) => ChatScreen(),
                       ),
                     );
                   },
@@ -100,7 +101,7 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatDetailScreen(),),);
+          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ChatScreen(),),);
         },
         child: const Icon(Icons.message),
       ),

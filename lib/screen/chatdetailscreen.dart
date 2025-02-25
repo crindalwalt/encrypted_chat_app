@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({super.key});
+class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
 
   @override
-  State<ChatDetailScreen> createState() => _ChatDetailScreenState();
+  State<ChatScreen> createState() => _ChatDetailScreenState();
 }
 
-class _ChatDetailScreenState extends State<ChatDetailScreen> {
+class _ChatDetailScreenState extends State<ChatScreen> {
   final TextEditingController _messageController = TextEditingController();
   final List<ChatMessage> _messages = [];
 
@@ -119,8 +119,8 @@ class ChatMessage extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isMe
-              ? Theme.of(context).colorScheme.primary
-              : Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+              ? Colors.white
+              : Colors.grey,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
