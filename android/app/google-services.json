@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1096775021335",
+    "project_id": "encrypted-chat-app-16c5f",
+    "storage_bucket": "encrypted-chat-app-16c5f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1096775021335:android:941be56af226bbe1243d52",
+        "android_client_info": {
+          "package_name": "com.example.encrypted_chat_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuxqWm_VJjHbIsvm2kWQdD26L_hGXNFJw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
