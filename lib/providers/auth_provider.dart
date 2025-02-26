@@ -5,26 +5,26 @@ class AuthProvider1 extends ChangeNotifier {
   UserCredential? _user;
   UserCredential? get userr => _user;
 
-  Future<String> signIn(String email, String password) async {
+  Future<String?> signIn(String email, String password) async {
     try {
       UserCredential cruntuser = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
       _user = cruntuser;
       notifyListeners();
-      return 'Signed in';
-    } on FirebaseAuthException catch (e) {
+      return null;
+    } catch (e) {
       return e.toString();
     }
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<String?> signUp(String email, String password) async {
     try {
       UserCredential cruntuser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       _user = cruntuser;
       notifyListeners();
-      return 'Signed up';
-    } on FirebaseAuthException catch (e) {
+      return null;
+    } catch (e) {
       return e.toString();
     }
   }
