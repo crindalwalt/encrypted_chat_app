@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider1 extends ChangeNotifier {
-  UserCredential? _userCredential;
-  UserCredential? get userCredential => _userCredential;
+  UserCredential? _user;
+  UserCredential? get userr => _user;
 
   Future<String> signIn(String email, String password) async {
     try {
-      _userCredential = await FirebaseAuth.instance
+      UserCredential cruntuser = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      _user = cruntuser;
       notifyListeners();
       return 'Signed in';
     } on FirebaseAuthException catch (e) {
@@ -18,8 +19,9 @@ class AuthProvider1 extends ChangeNotifier {
 
   Future<String> signUp(String email, String password) async {
     try {
-      _userCredential = await FirebaseAuth.instance
+      UserCredential cruntuser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      _user = cruntuser;
       notifyListeners();
       return 'Signed up';
     } on FirebaseAuthException catch (e) {
@@ -29,7 +31,7 @@ class AuthProvider1 extends ChangeNotifier {
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
-    _userCredential = null;
+    _user = null;
     notifyListeners();
   }
 }
