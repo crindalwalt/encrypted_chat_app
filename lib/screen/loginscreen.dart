@@ -2,7 +2,7 @@ import 'package:encrypted_chat_app/screen/registerscreen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
-final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,12 +14,14 @@ final _formKey = GlobalKey<FormState>();
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(mainAxisSize: MainAxisSize.min,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: FlutterLogo(size: 150,)
-              ),
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: FlutterLogo(
+                    size: 150,
+                  )),
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Email',
@@ -40,8 +42,7 @@ final _formKey = GlobalKey<FormState>();
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text('Login'),
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -51,18 +52,20 @@ final _formKey = GlobalKey<FormState>();
                 ),
               ),
               SizedBox(height: 20),
-              Row(mainAxisAlignment: MainAxisAlignment.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text('Don\'t have an account?'),
                   TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegisterScreen()),
-                  );
-                },
-                child: Text(' Register'),
-              ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => RegisterScreen()),
+                      );
+                    },
+                    child: Text(' Register'),
+                  ),
                 ],
               ),
             ],
@@ -72,4 +75,3 @@ final _formKey = GlobalKey<FormState>();
     );
   }
 }
-

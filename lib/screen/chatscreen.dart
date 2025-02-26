@@ -18,7 +18,8 @@ class _ChatScreenState extends State<ChatScreen> {
         title: Row(
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage('https://images.pexels.com/photos/15948932/pexels-photo-15948932/free-photo-of-cat-under-stroller.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+              backgroundImage: NetworkImage(
+                  'https://images.pexels.com/photos/15948932/pexels-photo-15948932/free-photo-of-cat-under-stroller.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
             ),
             SizedBox(width: 8),
             Column(

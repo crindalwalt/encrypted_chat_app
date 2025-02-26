@@ -1,11 +1,47 @@
-import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
-import 'package:encrypted_chat_app/screen/chatscreen.dart';
+import 'package:encrypted_chat_app/providers/auth_provider.dart';
+import 'package:encrypted_chat_app/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    final autprovider = Provider.of<AuthProvider1>(context);
+
+    void register(BuildContext context) {
+      if (_formKey.currentState!.validate()) {
+        autprovider
+            .signUp(
+          _emailController.text,
+          _passwordController.text,
+        )
+            .then((value) {
+          if (value == 'Signed up') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => LoginScreen()),
+            );
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Signed up'),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(value),
+              ),
+            );
+          }
+        });
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Register'),
@@ -18,10 +54,12 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child:FlutterLogo(size: 150,)
-              ),
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: FlutterLogo(
+                    size: 150,
+                  )),
               TextFormField(
+                controller: _nameController,
                 decoration: InputDecoration(
                   labelText: 'Full Name',
                   border: OutlineInputBorder(
@@ -31,6 +69,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextFormField(
+                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(
@@ -40,6 +79,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextFormField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Password',
@@ -60,11 +100,8 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox(height: 40),
               ElevatedButton(
-                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ChatDetailScreen()),
-                  );
+                onPressed: () {
+                  register(context);
                 },
                 child: Text('Register'),
                 style: ElevatedButton.styleFrom(
