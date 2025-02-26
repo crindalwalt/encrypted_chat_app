@@ -29,7 +29,7 @@ class AuthProvider1 extends ChangeNotifier {
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
-    _userCredential == null;
+    _userCredential = null;
     notifyListeners();
   }
 }

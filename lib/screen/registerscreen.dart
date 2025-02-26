@@ -8,12 +8,13 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final autprovider = Provider.of<AuthProvider1>(context);
 
-    void register(BuildContext context) {
+    void register1() {
       if (_formKey.currentState!.validate()) {
         autprovider
             .signUp(
@@ -90,6 +91,7 @@ class RegisterScreen extends StatelessWidget {
               ),
               SizedBox(height: 20),
               TextFormField(
+                controller: _confirmPasswordController,
                 obscureText: true,
                 decoration: InputDecoration(
                   labelText: 'Confirm Password',
@@ -97,11 +99,17 @@ class RegisterScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0),
                   ),
                 ),
+                validator: (value) {
+                  if (value != _passwordController.text) {
+                    return 'Passwords do not match';
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  register(context);
+                  register1();
                 },
                 child: Text('Register'),
                 style: ElevatedButton.styleFrom(
