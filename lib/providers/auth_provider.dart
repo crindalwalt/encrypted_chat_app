@@ -2,8 +2,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider1 extends ChangeNotifier {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  User? currentUser = FirebaseAuth.instance.currentUser;
   UserCredential? _user;
   UserCredential? get userr => _user;
+
+  Future<bool> isUserEmailVerified() async {
+    await currentUser?.reload();
+    currentUser = FirebaseAuth.instance.currentUser;
+    return currentUser?.emailVerified ?? false;
+  }
+
+  Future<void> sendVerificationEmail() async {
+    if (currentUser != null) {
+      print("sending verification email now ....");
+      await currentUser?.sendEmailVerification();
+    }
+  }
 
   Future<String?> signIn(String email, String password) async {
     try {
@@ -30,7 +45,7 @@ class AuthProvider1 extends ChangeNotifier {
   }
 
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+    await firebaseAuth.signOut();
     _user = null;
     notifyListeners();
   }

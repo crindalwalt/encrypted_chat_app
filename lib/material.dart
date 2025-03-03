@@ -1,4 +1,5 @@
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
+import 'package:encrypted_chat_app/screen/auth_wrapper.dart';
 import 'package:encrypted_chat_app/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: AuthWrapper(),
       ),
     );
   }
