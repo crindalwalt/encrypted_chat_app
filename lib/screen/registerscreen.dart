@@ -1,5 +1,7 @@
 <<<<<<< Updated upstream
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
+import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
+import 'package:encrypted_chat_app/screen/chatscreen.dart';
 import 'package:encrypted_chat_app/screen/loginscreen.dart';
 =======
 import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
@@ -12,45 +14,34 @@ class RegisterScreen extends StatelessWidget {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _confirmPasswordController = TextEditingController();
-
+  // registration logic
+  void registerUser(BuildContext context) {
+    final autprovider = Provider.of<AuthProvider1>(context,listen: false);
+    if (_formKey.currentState!.validate()) {
+      print(_emailController.text);
+      print(_passwordController.text);
+      autprovider
+          .signUp(_emailController.text, _passwordController.text)
+          .then((_) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Registered')));
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (context) => ChatDetailScreen(),)
+            );
+          })
+          .catchError((error) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(error.toString())));
+          });
+    }
+  }
+  // build UI method
   @override
   Widget build(BuildContext context) {
-    final autprovider = Provider.of<AuthProvider1>(context);
-
-    void register1() {
-      if (_formKey.currentState!.validate()) {
-        autprovider
-            .signUp(
-          _emailController.text,
-          _passwordController.text,
-        )
-            .then((value) {
-          if (value == 'Signed up') {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => LoginScreen()),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Signed up'),
-              ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(value),
-              ),
-            );
-          }
-        });
-      }
-    }
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Register'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Register'), centerTitle: true),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Form(
@@ -58,10 +49,9 @@ class RegisterScreen extends StatelessWidget {
           child: Column(
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  child: FlutterLogo(
-                    size: 150,
-                  )),
+                margin: EdgeInsets.only(bottom: 20),
+                child: FlutterLogo(size: 150),
+              ),
               TextFormField(
                 controller: _nameController,
                 decoration: InputDecoration(
@@ -112,7 +102,7 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(height: 40),
               ElevatedButton(
                 onPressed: () {
-                  register1();
+                  registerUser(context);
                 },
                 child: Text('Register'),
                 style: ElevatedButton.styleFrom(

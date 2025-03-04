@@ -2,34 +2,51 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider1 extends ChangeNotifier {
-  UserCredential? _userCredential;
-  UserCredential? get userCredential => _userCredential;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  User? currentUser = FirebaseAuth.instance.currentUser;
+  UserCredential? _user;
+  UserCredential? get userr => _user;
 
-  Future<String> signIn(String email, String password) async {
+  Future<bool> isUserEmailVerified() async {
+    await currentUser?.reload();
+    currentUser = FirebaseAuth.instance.currentUser;
+    return currentUser?.emailVerified ?? false;
+  }
+
+  Future<void> sendVerificationEmail() async {
+    if (currentUser != null) {
+      print("sending verification email now ....");
+      await currentUser?.sendEmailVerification();
+    }
+  }
+
+  Future<String?> signIn(String email, String password) async {
     try {
-      _userCredential = await FirebaseAuth.instance
+      UserCredential cruntuser = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      _user = cruntuser;
       notifyListeners();
-      return 'Signed in';
-    } on FirebaseAuthException catch (e) {
+      return null;
+    } catch (e) {
       return e.toString();
     }
   }
 
-  Future<String> signUp(String email, String password) async {
+  Future<String?> signUp(String email, String password) async {
     try {
-      _userCredential = await FirebaseAuth.instance
+      UserCredential cruntuser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      _user = cruntuser;
       notifyListeners();
-      return 'Signed up';
-    } on FirebaseAuthException catch (e) {
+      return null;
+    } catch (e) {
       return e.toString();
     }
   }
 
   Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
-    _userCredential = null;
+    await firebaseAuth.signOut();
+    _user = null;
     notifyListeners();
   }
 }

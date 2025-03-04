@@ -1,5 +1,5 @@
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
-import 'package:encrypted_chat_app/screen/chatscreen.dart';
+import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
 import 'package:encrypted_chat_app/screen/registerscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,33 +15,22 @@ class LoginScreen extends StatelessWidget {
       if (_formKey.currentState!.validate()) {
         authprovider
             .signIn(_emailController.text, _passwordController.text)
-            .then((value) {
-          if (value == true) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => ChatScreen()),
-            );
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text('Signed in'),
-              ),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(value),
-              ),
-            );
-          }
-        });
+            .then((_) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatDetailScreen()),
+              );
+            })
+            .catchError((error) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text(error.toString())));
+            });
       }
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: Text('Login'), centerTitle: true),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(
@@ -50,10 +39,9 @@ class LoginScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.only(bottom: 20),
-                  child: FlutterLogo(
-                    size: 150,
-                  )),
+                margin: EdgeInsets.only(bottom: 20),
+                child: FlutterLogo(size: 150),
+              ),
               TextFormField(
                 controller: _emailController,
                 decoration: InputDecoration(
@@ -97,7 +85,8 @@ class LoginScreen extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterScreen()),
+                          builder: (context) => RegisterScreen(),
+                        ),
                       );
                     },
                     child: Text(' Register'),
