@@ -1,5 +1,5 @@
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
-import 'package:encrypted_chat_app/screen/friendprofilescreen.dart';
+import 'package:encrypted_chat_app/screen/friendprofile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

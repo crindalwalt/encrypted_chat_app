@@ -1,4 +1,4 @@
-import 'package:encrypted_chat_app/screen/chatscreen.dart';
+import 'package:encrypted_chat_app/screen/chat.dart';
 import 'package:flutter/material.dart';
 
 class UserProfileScreen extends StatelessWidget {
@@ -13,8 +13,6 @@ class UserProfileScreen extends StatelessWidget {
     required this.userBio,
     required this.userFriends,
   });
-
-  
 
   @override
   Widget build(BuildContext context) {
