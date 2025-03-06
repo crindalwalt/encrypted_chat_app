@@ -19,7 +19,7 @@ class RegisterScreen extends StatelessWidget {
       print(_emailController.text);
       print(_passwordController.text);
       autprovider
-          .signUp(_emailController.text, _passwordController.text)
+          .signUp(_nameController.text,_emailController.text, _passwordController.text)
           .then((_) {
             ScaffoldMessenger.of(
               context,

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AuthProvider1 extends ChangeNotifier {
+  FirebaseFirestore _database = FirebaseFirestore.instance;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   User? currentUser = FirebaseAuth.instance.currentUser;
   UserCredential? _user;
@@ -20,6 +22,7 @@ class AuthProvider1 extends ChangeNotifier {
     }
   }
 
+  // Login existing user
   Future<String?> signIn(String email, String password) async {
     try {
       UserCredential cruntuser = await FirebaseAuth.instance
@@ -32,10 +35,17 @@ class AuthProvider1 extends ChangeNotifier {
     }
   }
 
-  Future<String?> signUp(String email, String password) async {
+  // Register a new user
+  Future<String?> signUp(String name,String email, String password) async {
     try {
       UserCredential cruntuser = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+      final userInFirestore = await _database.collection("users").add({
+        "name" : name,
+        "email" : email,
+        "verified" : false,
+        "createdAt" : FieldValue.serverTimestamp(),
+      });
       _user = cruntuser;
       notifyListeners();
       return null;
@@ -48,5 +58,13 @@ class AuthProvider1 extends ChangeNotifier {
     await firebaseAuth.signOut();
     _user = null;
     notifyListeners();
+  }
+
+
+
+
+  Stream<QuerySnapshot> getAllUsers () {
+    final allUsers = _database.collection("users").snapshots();
+    return allUsers;
   }
 }
