@@ -1,9 +1,7 @@
-<<<<<<< Updated upstream
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
 import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
 import 'package:encrypted_chat_app/screen/chatscreen.dart';
 import 'package:encrypted_chat_app/screen/loginscreen.dart';
-=======
 import 'package:encrypted_chat_app/screen/chatdetailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

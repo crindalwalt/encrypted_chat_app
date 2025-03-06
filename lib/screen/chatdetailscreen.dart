@@ -1,4 +1,5 @@
 import 'package:encrypted_chat_app/providers/auth_provider.dart';
+import 'package:encrypted_chat_app/screen/addfriendscreen.dart';
 import 'package:encrypted_chat_app/screen/chatscreen.dart';
 import 'package:encrypted_chat_app/screen/loginscreen.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,12 @@ class ChatDetailScreen extends StatelessWidget {
         title: Text('ChatsDetail'),
         elevation: 0,
         actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder:  (context) => AddFriendScreen()));
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.edit_outlined),
             onPressed: () {
