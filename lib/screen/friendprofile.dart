@@ -22,9 +22,7 @@ class UserProfileScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.chat),
-            onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(builder: (context) => ChatScreen()));
-            },
+            onPressed: () {},
           ),
         ],
       ),
