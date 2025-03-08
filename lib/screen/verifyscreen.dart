@@ -27,10 +27,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Verification Successful!")),
       );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ChatDetailScreen()),
-      );
     }
   }
 
@@ -38,14 +34,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthProvider1>(context);
     return Scaffold(
-      backgroundColor: Colors.blue.withOpacity(0.4),
+      backgroundColor: Colors.grey[100],
       body: Center(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Card(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             elevation: 5,
-            color: Colors.grey.withOpacity(0.2), // Added transparent background color
             child: Padding(
               padding: EdgeInsets.all(20.0),
               child: Column(
@@ -105,6 +100,49 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       ),
                     ),
                   ],
+                  Expanded(
+                    child: FutureBuilder(
+                      future: authService.isUserEmailVerified(),
+                      builder: (context, snapshot) {
+                        print(snapshot.data);
+                        if (snapshot.data != true) {
+                          return ListTile(
+                            title: Text("Email not verified"),
+                            leading: Icon(Icons.cancel),
+                            trailing: IconButton(
+                              onPressed: () {
+                                authService.sendVerificationEmail();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(content: Text("Verification email sent")),
+                                );
+                              },
+                              icon: Icon(Icons.send),
+                            ),
+                          );
+                        }
+                        return Text("Email Verified");
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ChatDetailScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            title: Text("Chat $index"),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -114,3 +152,13 @@ class _VerificationScreenState extends State<VerificationScreen> {
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
